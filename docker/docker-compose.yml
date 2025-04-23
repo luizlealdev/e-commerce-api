@@ -1,0 +1,17 @@
+services:
+  mysql:
+    image: mysql
+    container_name: "e-commerce-db"
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_USER=ecommerce_admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=ecommerce_db
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:
