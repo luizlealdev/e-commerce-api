@@ -4,14 +4,17 @@ import dev.luizleal.ecommerce.persistence.types.Role;
 import dev.luizleal.ecommerce.persistence.types.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CurrentTimestamp;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "tb_users")
 public class User {
 
@@ -31,7 +34,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "address", length = 80)
+    @Column(name = "address")
     private String address;
 
     @Column(name = "role", length = 12)
@@ -41,6 +44,24 @@ public class User {
     private Status status = Status.ACTIVE;
 
     @Column(name = "created_at")
-    private OffsetDateTime createdAt = OffsetDateTime.now();
+    @CurrentTimestamp
+    private Instant createdAt;
 
+    public User(
+            String firstName,
+            String lastName,
+            String email,
+            String password,
+            String address
+    ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+    }
+
+    public boolean isActive() {
+        return this.role.name().equals(Status.ACTIVE);
+    }
 }
