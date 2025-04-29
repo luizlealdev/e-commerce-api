@@ -19,7 +19,7 @@ public class UserService {
 
     public UserResponseDto createUser(UserRequestDto userRequestDto) {
         var existentUser = userRepository.findByEmail(userRequestDto.email());
-        if (existentUser.isEmpty()) {
+        if (existentUser.isPresent()) {
             throw new UserAlreadyExistsException();
         }
 
