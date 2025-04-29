@@ -5,5 +5,6 @@ public record UserResponseDto(String id,
                               String lastName,
                               String email,
                               String address,
-                              String role) {
+                              String role,
+                              JwtResponseDto auth) {
 }

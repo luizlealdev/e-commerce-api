@@ -1,8 +1,9 @@
 package dev.luizleal.ecommerce.controller;
 
-import dev.luizleal.ecommerce.dto.request.UserRequestDto;
+import dev.luizleal.ecommerce.dto.request.LoginDto;
+import dev.luizleal.ecommerce.dto.request.RegisterDto;
 import dev.luizleal.ecommerce.dto.response.UserResponseDto;
-import dev.luizleal.ecommerce.service.UserService;
+import dev.luizleal.ecommerce.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    private UserService userService;
+    private AuthService authService;
 
     @PostMapping("/auth/register")
-    public ResponseEntity<UserResponseDto> registerUser(@RequestBody @Valid UserRequestDto dto) {
-        var createdUser = userService.createUser(dto);
+    public ResponseEntity<UserResponseDto> register(@RequestBody @Valid RegisterDto dto) {
+        var createdUser = authService.register(dto);
+
         return ResponseEntity.status(201).body(createdUser);
+    }
+
+    @PostMapping("/auth/login")
+    public ResponseEntity<UserResponseDto> login(@RequestBody @Valid LoginDto dto) {
+        var userLogged = authService.login(dto);
+
+        return ResponseEntity.ok(userLogged);
     }
 }
