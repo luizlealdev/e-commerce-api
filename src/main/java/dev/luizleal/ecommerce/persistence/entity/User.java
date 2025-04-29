@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CurrentTimestamp;
 
 import java.time.Instant;
+import java.util.UUID;
 
 
 @Getter
@@ -19,8 +20,8 @@ import java.time.Instant;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "first_name", length = 50)
     private String firstName;
