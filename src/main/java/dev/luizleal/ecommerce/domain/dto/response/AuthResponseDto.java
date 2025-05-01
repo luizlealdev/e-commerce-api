@@ -1,6 +1,6 @@
 package dev.luizleal.ecommerce.domain.dto.response;
 
-public record UserResponseDto(String id,
+public record AuthResponseDto(String id,
                               String firstName,
                               String lastName,
                               String email,

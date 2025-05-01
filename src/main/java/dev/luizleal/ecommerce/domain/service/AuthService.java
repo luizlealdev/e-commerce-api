@@ -1,9 +1,9 @@
 package dev.luizleal.ecommerce.domain.service;
 
-import dev.luizleal.ecommerce.domain.dto.request.LoginDto;
-import dev.luizleal.ecommerce.domain.dto.request.RegisterDto;
+import dev.luizleal.ecommerce.domain.dto.request.LoginRequestDto;
+import dev.luizleal.ecommerce.domain.dto.request.RegisterRequestDto;
+import dev.luizleal.ecommerce.domain.dto.response.AuthResponseDto;
 import dev.luizleal.ecommerce.domain.dto.response.JwtResponseDto;
-import dev.luizleal.ecommerce.domain.dto.response.UserResponseDto;
 import dev.luizleal.ecommerce.exception.UserAlreadyExistsException;
 import dev.luizleal.ecommerce.exception.InvalidCredentialsException;
 import dev.luizleal.ecommerce.exception.UserNotFoundException;
@@ -22,7 +22,7 @@ public class AuthService {
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private JwtService jwtService;
 
-    public UserResponseDto register(RegisterDto userRequestDto) {
+    public AuthResponseDto register(RegisterRequestDto userRequestDto) {
         var existentUser = userRepository.findByEmail(userRequestDto.email());
         if (existentUser.isPresent()) {
             throw new UserAlreadyExistsException();
@@ -38,7 +38,7 @@ public class AuthService {
         var accessToken = jwtService.generateAccessToken(createdUser);
         var refreshToken = jwtService.generateRefreshToken(createdUser);
 
-        return new UserResponseDto(
+        return new AuthResponseDto(
                 createdUser.getId().toString(),
                 createdUser.getFirstName(),
                 createdUser.getLastName(),
@@ -49,7 +49,7 @@ public class AuthService {
         );
     }
 
-    public UserResponseDto login(LoginDto loginDto) {
+    public AuthResponseDto login(LoginRequestDto loginDto) {
         var findUser = userRepository.findByEmail(loginDto.email());
         if (findUser.isEmpty()) {
             throw new InvalidCredentialsException("The user with email '" + loginDto.email() + "' was not found");
@@ -64,7 +64,7 @@ public class AuthService {
         var accessToken = jwtService.generateAccessToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
 
-        return new UserResponseDto(
+        return new AuthResponseDto(
                 user.getId().toString(),
                 user.getFirstName(),
                 user.getLastName(),
