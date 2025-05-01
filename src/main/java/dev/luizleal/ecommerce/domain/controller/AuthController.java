@@ -1,10 +1,10 @@
 package dev.luizleal.ecommerce.domain.controller;
 
-import dev.luizleal.ecommerce.domain.dto.request.LoginDto;
-import dev.luizleal.ecommerce.domain.dto.request.RegisterDto;
+import dev.luizleal.ecommerce.domain.dto.request.LoginRequestDto;
+import dev.luizleal.ecommerce.domain.dto.request.RegisterRequestDto;
 import dev.luizleal.ecommerce.domain.dto.response.ApiResponse;
 import dev.luizleal.ecommerce.domain.dto.response.JwtResponseDto;
-import dev.luizleal.ecommerce.domain.dto.response.UserResponseDto;
+import dev.luizleal.ecommerce.domain.dto.response.AuthResponseDto;
 import dev.luizleal.ecommerce.domain.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +25,8 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/auth/register")
-    public ResponseEntity<ApiResponse<UserResponseDto>> register(
-            @RequestBody @Valid RegisterDto dto
+    public ResponseEntity<ApiResponse<AuthResponseDto>> register(
+            @RequestBody @Valid RegisterRequestDto dto
     ) {
         var createdUser = authService.register(dto);
         var response = new ApiResponse<>(
@@ -40,8 +40,8 @@ public class AuthController {
     }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<ApiResponse<UserResponseDto>> login(
-            @RequestBody @Valid LoginDto dto
+    public ResponseEntity<ApiResponse<AuthResponseDto>> login(
+            @RequestBody @Valid LoginRequestDto dto
     ) {
         var userLogged = authService.login(dto);
         var response = new ApiResponse<>(
