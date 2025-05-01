@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class JwtService {
@@ -21,7 +20,7 @@ public class JwtService {
         var now = Instant.now();
 
         var claimsSet = JwtClaimsSet.builder()
-                .issuer("E-Commerce API")
+                .issuer("www.luizleal.dev")
                 .subject(subject)
                 .claims(c -> c.putAll(claims))
                 .issuedAt(now)
