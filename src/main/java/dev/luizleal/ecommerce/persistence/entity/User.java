@@ -1,7 +1,7 @@
 package dev.luizleal.ecommerce.persistence.entity;
 
-import dev.luizleal.ecommerce.persistence.types.Role;
-import dev.luizleal.ecommerce.persistence.types.Status;
+import dev.luizleal.ecommerce.persistence.common.Role;
+import dev.luizleal.ecommerce.persistence.common.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

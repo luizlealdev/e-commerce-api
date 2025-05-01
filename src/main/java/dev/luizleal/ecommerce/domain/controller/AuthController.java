@@ -1,10 +1,10 @@
-package dev.luizleal.ecommerce.controller;
+package dev.luizleal.ecommerce.domain.controller;
 
-import dev.luizleal.ecommerce.dto.request.LoginDto;
-import dev.luizleal.ecommerce.dto.request.RegisterDto;
-import dev.luizleal.ecommerce.dto.response.JwtResponseDto;
-import dev.luizleal.ecommerce.dto.response.UserResponseDto;
-import dev.luizleal.ecommerce.service.AuthService;
+import dev.luizleal.ecommerce.domain.dto.request.LoginDto;
+import dev.luizleal.ecommerce.domain.dto.request.RegisterDto;
+import dev.luizleal.ecommerce.domain.dto.response.JwtResponseDto;
+import dev.luizleal.ecommerce.domain.dto.response.UserResponseDto;
+import dev.luizleal.ecommerce.domain.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

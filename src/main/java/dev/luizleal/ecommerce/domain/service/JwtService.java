@@ -1,4 +1,4 @@
-package dev.luizleal.ecommerce.service;
+package dev.luizleal.ecommerce.domain.service;
 
 import dev.luizleal.ecommerce.persistence.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;

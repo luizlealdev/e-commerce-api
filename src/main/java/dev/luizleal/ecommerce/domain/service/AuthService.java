@@ -1,9 +1,9 @@
-package dev.luizleal.ecommerce.service;
+package dev.luizleal.ecommerce.domain.service;
 
-import dev.luizleal.ecommerce.dto.request.LoginDto;
-import dev.luizleal.ecommerce.dto.request.RegisterDto;
-import dev.luizleal.ecommerce.dto.response.JwtResponseDto;
-import dev.luizleal.ecommerce.dto.response.UserResponseDto;
+import dev.luizleal.ecommerce.domain.dto.request.LoginDto;
+import dev.luizleal.ecommerce.domain.dto.request.RegisterDto;
+import dev.luizleal.ecommerce.domain.dto.response.JwtResponseDto;
+import dev.luizleal.ecommerce.domain.dto.response.UserResponseDto;
 import dev.luizleal.ecommerce.exception.UserAlreadyExistsException;
 import dev.luizleal.ecommerce.exception.InvalidCredentialsException;
 import dev.luizleal.ecommerce.exception.UserNotFoundException;

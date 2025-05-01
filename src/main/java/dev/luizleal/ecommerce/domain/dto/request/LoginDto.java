@@ -1,4 +1,4 @@
-package dev.luizleal.ecommerce.dto.request;
+package dev.luizleal.ecommerce.domain.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package dev.luizleal.ecommerce.controller.handle;
+package dev.luizleal.ecommerce.domain.controller.handle;
 
 import dev.luizleal.ecommerce.exception.ECommerceException;
 import org.springframework.http.HttpStatus;

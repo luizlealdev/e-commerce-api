@@ -1,4 +1,4 @@
-package dev.luizleal.ecommerce.persistence.types;
+package dev.luizleal.ecommerce.persistence.common;
 
 import lombok.AllArgsConstructor;
 

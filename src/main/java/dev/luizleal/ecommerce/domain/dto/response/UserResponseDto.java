@@ -1,4 +1,4 @@
-package dev.luizleal.ecommerce.dto.response;
+package dev.luizleal.ecommerce.domain.dto.response;
 
 public record UserResponseDto(String id,
                               String firstName,
