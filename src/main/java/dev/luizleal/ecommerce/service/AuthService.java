@@ -6,10 +6,14 @@ import dev.luizleal.ecommerce.dto.response.JwtResponseDto;
 import dev.luizleal.ecommerce.dto.response.UserResponseDto;
 import dev.luizleal.ecommerce.exception.UserAlreadyExistsException;
 import dev.luizleal.ecommerce.exception.InvalidCredentialsException;
+import dev.luizleal.ecommerce.exception.UserNotFoundException;
 import dev.luizleal.ecommerce.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -71,4 +75,22 @@ public class AuthService {
         );
     }
 
+    public JwtResponseDto refresh(String token) {
+        var formattedToken = token.split(" ")[1];
+
+        if (!jwtService.isTokenValid(formattedToken, "refresh")) {
+            throw new InvalidBearerTokenException("The Bearer token is invalid or it's not a refresh token");
+        }
+
+        var userId = jwtService.getSubject(formattedToken);
+        var user = userRepository.findById(UUID.fromString(userId));
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("No user found related to this token");
+        }
+
+        var accessToken = jwtService.generateAccessToken(user.get());
+
+        return new JwtResponseDto(accessToken, formattedToken);
+    }
 }

@@ -2,13 +2,16 @@ package dev.luizleal.ecommerce.controller;
 
 import dev.luizleal.ecommerce.dto.request.LoginDto;
 import dev.luizleal.ecommerce.dto.request.RegisterDto;
+import dev.luizleal.ecommerce.dto.response.JwtResponseDto;
 import dev.luizleal.ecommerce.dto.response.UserResponseDto;
 import dev.luizleal.ecommerce.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,5 +32,12 @@ public class AuthController {
         var userLogged = authService.login(dto);
 
         return ResponseEntity.ok(userLogged);
+    }
+
+    @PostMapping("/auth/refresh")
+    public ResponseEntity<JwtResponseDto> refreshToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
+        var authTokens = authService.refresh(authorization);
+
+        return ResponseEntity.ok(authTokens);
     }
 }
