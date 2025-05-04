@@ -4,7 +4,7 @@ import dev.luizleal.ecommerce.domain.dto.request.LoginRequestDto;
 import dev.luizleal.ecommerce.domain.dto.request.RegisterRequestDto;
 import dev.luizleal.ecommerce.domain.dto.response.AuthResponseDto;
 import dev.luizleal.ecommerce.domain.dto.response.JwtResponseDto;
-import dev.luizleal.ecommerce.exception.UserAlreadyExistsException;
+import dev.luizleal.ecommerce.exception.EmailAlreadyUsedException;
 import dev.luizleal.ecommerce.exception.InvalidCredentialsException;
 import dev.luizleal.ecommerce.exception.UserNotFoundException;
 import dev.luizleal.ecommerce.persistence.repository.UserRepository;
@@ -25,7 +25,7 @@ public class AuthService {
     public AuthResponseDto register(RegisterRequestDto userRequestDto) {
         var existentUser = userRepository.findByEmail(userRequestDto.email());
         if (existentUser.isPresent()) {
-            throw new UserAlreadyExistsException();
+            throw new EmailAlreadyUsedException();
         }
 
         var userEntity = userRequestDto.toEntity();
