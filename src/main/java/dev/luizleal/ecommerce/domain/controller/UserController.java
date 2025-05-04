@@ -8,10 +8,13 @@ import dev.luizleal.ecommerce.domain.dto.response.UserPrivateResponseDto;
 import dev.luizleal.ecommerce.domain.dto.response.UserPublicResponseDto;
 import dev.luizleal.ecommerce.domain.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static dev.luizleal.ecommerce.persistence.common.ApiResponseStatus.SUCCESS;
 import static dev.luizleal.ecommerce.persistence.common.ApiResponseStatus.UPDATED;
@@ -49,6 +52,26 @@ public class UserController {
                 SUCCESS.status,
                 "User data fetched successfully",
                 userData
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/user/all")
+    //@PreAuthorize("hasAuthority('TYPE_ACCESS')")
+    public ResponseEntity<ApiResponse<List<UserPublicResponseDto>>> getUserData(
+            @RequestParam(value = "offset", defaultValue = "0") int offset,
+            @RequestParam(value = "limit", defaultValue = "100") int limit
+    ) {
+        var usersList = userService.getAllUsers(
+                offset,
+                limit
+        );
+        var response = new ApiResponse<>(
+                SUCCESS.statusCode,
+                SUCCESS.status,
+                "User data fetched successfully",
+                usersList
         );
 
         return ResponseEntity.ok(response);

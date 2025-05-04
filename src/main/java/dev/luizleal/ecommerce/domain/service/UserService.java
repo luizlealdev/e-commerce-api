@@ -9,9 +9,12 @@ import dev.luizleal.ecommerce.exception.InvalidCredentialsException;
 import dev.luizleal.ecommerce.exception.UserNotFoundException;
 import dev.luizleal.ecommerce.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -58,6 +61,18 @@ public class UserService {
                 user.getAddress(),
                 user.getRole().name()
         );
+    }
+
+    public List<UserPublicResponseDto> getAllUsers(int offset, int limit) {
+        var pageRequest = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "createdAt"));
+        var users = userRepository.findAllByOrderByCreatedAtDesc(pageRequest);
+
+        return users.map(usr -> new UserPublicResponseDto(
+                usr.getId().toString(),
+                usr.getFirstName(),
+                usr.getLastName(),
+                usr.getRole().name()
+        )).getContent();
     }
 
     public UserPrivateResponseDto updateUser(String authorization, UpdateUserRequestDto dto) {
@@ -113,5 +128,4 @@ public class UserService {
 
         userRepository.save(entity);
     }
-
 }
