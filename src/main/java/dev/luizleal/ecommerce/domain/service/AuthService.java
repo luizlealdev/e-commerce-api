@@ -45,6 +45,7 @@ public class AuthService {
                 createdUser.getEmail(),
                 createdUser.getAddress(),
                 createdUser.getRole().name(),
+                createdUser.getCreatedAt(),
                 new JwtResponseDto(accessToken, refreshToken)
         );
     }
@@ -71,6 +72,7 @@ public class AuthService {
                 user.getEmail(),
                 user.getAddress(),
                 user.getRole().name(),
+                user.getCreatedAt(),
                 new JwtResponseDto(accessToken, refreshToken)
         );
     }

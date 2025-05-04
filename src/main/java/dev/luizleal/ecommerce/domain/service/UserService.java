@@ -37,7 +37,8 @@ public class UserService {
                 user.getId().toString(),
                 user.getFirstName(),
                 user.getLastName(),
-                user.getRole().name()
+                user.getRole().name(),
+                user.getCreatedAt()
         );
 
     }
@@ -59,7 +60,8 @@ public class UserService {
                 user.getLastName(),
                 user.getEmail(),
                 user.getAddress(),
-                user.getRole().name()
+                user.getRole().name(),
+                user.getCreatedAt()
         );
     }
 
@@ -71,7 +73,8 @@ public class UserService {
                 usr.getId().toString(),
                 usr.getFirstName(),
                 usr.getLastName(),
-                usr.getRole().name()
+                usr.getRole().name(),
+                usr.getCreatedAt()
         )).getContent();
     }
 
@@ -103,7 +106,8 @@ public class UserService {
                 entity.getLastName(),
                 entity.getEmail(),
                 entity.getAddress(),
-                entity.getRole().name()
+                entity.getRole().name(),
+                entity.getCreatedAt()
         );
     }
 
