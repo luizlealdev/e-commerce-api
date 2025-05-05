@@ -1,7 +1,7 @@
 package dev.luizleal.ecommerce.persistence.entity;
 
-import dev.luizleal.ecommerce.persistence.common.Role;
-import dev.luizleal.ecommerce.persistence.common.Status;
+import dev.luizleal.ecommerce.persistence.common.UserRole;
+import dev.luizleal.ecommerce.persistence.common.UserStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,10 +39,10 @@ public class User {
     private String address;
 
     @Column(name = "role", length = 12)
-    private Role role = Role.CLIENT;
+    private UserRole role = UserRole.CLIENT;
 
     @Column(name = "status", length = 12)
-    private Status status = Status.ACTIVE;
+    private UserStatus status = UserStatus.ACTIVE;
 
     @Column(name = "created_at")
     @CurrentTimestamp
@@ -63,6 +63,6 @@ public class User {
     }
 
     public boolean isActive() {
-        return this.role.name().equals(Status.ACTIVE);
+        return this.role.name().equals(UserStatus.ACTIVE);
     }
 }

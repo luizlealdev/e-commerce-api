@@ -8,7 +8,7 @@ import dev.luizleal.ecommerce.exception.EmailAlreadyUsedException;
 import dev.luizleal.ecommerce.exception.InvalidCredentialsException;
 import dev.luizleal.ecommerce.exception.InvalidPropertyException;
 import dev.luizleal.ecommerce.exception.UserNotFoundException;
-import dev.luizleal.ecommerce.persistence.common.Role;
+import dev.luizleal.ecommerce.persistence.common.UserRole;
 import dev.luizleal.ecommerce.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -94,7 +94,7 @@ public class UserService {
             throw new EmailAlreadyUsedException();
         }
 
-        if (!Role.isClientOrSeller(dto.role())) {
+        if (!UserRole.isClientOrSeller(dto.role())) {
             throw new InvalidPropertyException("role", "Only CLIENT or SELLER roles are allowed");
         }
 
@@ -103,7 +103,7 @@ public class UserService {
         entity.setLastName(dto.lastName());
         entity.setEmail(dto.email());
         entity.setAddress(dto.address());
-        entity.setRole(Role.valueOf(dto.role()));
+        entity.setRole(UserRole.valueOf(dto.role()));
 
         userRepository.save(entity);
 
