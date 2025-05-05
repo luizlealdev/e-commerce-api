@@ -23,19 +23,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "first_name", length = 50)
+    @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", length = 50)
+    @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
 
-    @Column(name = "email", length = 100, unique = true)
+    @Column(name = "email", length = 100, unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "address")
+    @Column(name = "address", nullable = false)
     private String address;
 
     @Column(name = "role", length = 12)
