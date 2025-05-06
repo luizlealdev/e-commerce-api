@@ -8,8 +8,12 @@ import dev.luizleal.ecommerce.exception.EmailAlreadyUsedException;
 import dev.luizleal.ecommerce.exception.InvalidCredentialsException;
 import dev.luizleal.ecommerce.exception.InvalidPropertyException;
 import dev.luizleal.ecommerce.exception.UserNotFoundException;
+import dev.luizleal.ecommerce.persistence.common.ProductStatus;
 import dev.luizleal.ecommerce.persistence.common.UserRole;
+import dev.luizleal.ecommerce.persistence.common.UserStatus;
+import dev.luizleal.ecommerce.persistence.repository.ProductRepository;
 import dev.luizleal.ecommerce.persistence.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -24,6 +28,7 @@ import java.util.UUID;
 public class UserService {
 
     @Autowired private UserRepository userRepository;
+    @Autowired private ProductRepository productRepository;
     @Autowired private JwtService jwtService;
     @Autowired private PasswordEncoder passwordEncoder;
 
@@ -50,7 +55,7 @@ public class UserService {
         var sub = jwtService.getSubject(token);
 
         var userOptional = userRepository.findById(UUID.fromString(sub));
-        if (userOptional.isEmpty()) {
+        if (userOptional.isEmpty() || !UserStatus.isActive(userOptional.get().getStatus())) {
             throw new UserNotFoundException("No user found related to this token");
         }
 
@@ -85,7 +90,7 @@ public class UserService {
         var sub = jwtService.getSubject(token);
 
         var user = userRepository.findById(UUID.fromString(sub));
-        if (user.isEmpty()) {
+        if (user.isEmpty() || !UserStatus.isActive(user.get().getStatus())) {
             throw new UserNotFoundException("No user found related to this token");
         }
 
@@ -118,12 +123,32 @@ public class UserService {
         );
     }
 
+    @Transactional
+    public void deleteUser(String authorization) {
+        var token = authorization.split(" ")[1];
+        var sub = jwtService.getSubject(token);
+
+        var user = userRepository.findById(UUID.fromString(sub));
+        if (user.isEmpty() || !UserStatus.isActive(user.get().getStatus())) {
+            throw new UserNotFoundException("No user found related to this token");
+        }
+
+        var userEntity = user.get();
+        userEntity.setStatus(UserStatus.DELETED);
+
+        var userProducts = productRepository.findBySeller(user.get());
+        userProducts.forEach(product -> product.setStatus(ProductStatus.DELETED));
+
+        userRepository.save(userEntity);
+        productRepository.saveAll(userProducts);
+    }
+
     public void updateUserPassword(String authorization, UpdatePasswordRequestDto dto) {
         var token = authorization.split(" ")[1];
         var sub = jwtService.getSubject(token);
 
         var user = userRepository.findById(UUID.fromString(sub));
-        if (user.isEmpty()) {
+        if (user.isEmpty() || !UserStatus.isActive(user.get().getStatus())) {
             throw new UserNotFoundException("No user found related to this token");
         }
 

@@ -8,7 +8,6 @@ import dev.luizleal.ecommerce.domain.dto.response.UserPrivateResponseDto;
 import dev.luizleal.ecommerce.domain.dto.response.UserPublicResponseDto;
 import dev.luizleal.ecommerce.domain.service.UserService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static dev.luizleal.ecommerce.persistence.common.ApiResponseStatus.SUCCESS;
-import static dev.luizleal.ecommerce.persistence.common.ApiResponseStatus.UPDATED;
+import static dev.luizleal.ecommerce.persistence.common.ApiResponseStatus.*;
 
 @RestController
 public class UserController {
@@ -88,6 +86,21 @@ public class UserController {
                 SUCCESS.status,
                 "User data updated successfully",
                 userData
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/user")
+    public ResponseEntity<ApiResponse<Object>> deleteUser(
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization
+    ) {
+        userService.deleteUser(authorization);
+        var response = new ApiResponse<>(
+                DELETED.statusCode,
+                DELETED.status,
+                "User deleted successfully",
+                null
         );
 
         return ResponseEntity.ok(response);
