@@ -95,7 +95,7 @@ public class UserService {
         return new UserPrivateResponseDto(entity);
     }
 
-    @Transactional
+    /*@Transactional
     public void deleteUser(String authorization) {
         var token = authorization.split(" ")[1];
         var sub = jwtService.getSubject(token);
@@ -113,7 +113,7 @@ public class UserService {
 
         userRepository.save(userEntity);
         productRepository.saveAll(userProducts);
-    }
+    }*/
 
     public void updateUserPassword(String authorization, UpdatePasswordRequestDto dto) {
         var token = authorization.split(" ")[1];

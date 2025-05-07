@@ -91,7 +91,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/user")
+    /*@DeleteMapping("/user")
     public ResponseEntity<ApiResponse<Object>> deleteUser(
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization
     ) {
@@ -104,7 +104,7 @@ public class UserController {
         );
 
         return ResponseEntity.ok(response);
-    }
+    }*/
 
     @PutMapping("/user/update-password")
     public ResponseEntity<ApiResponse<Object>> updatePassword(
