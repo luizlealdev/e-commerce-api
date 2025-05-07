@@ -7,7 +7,7 @@ import dev.luizleal.ecommerce.domain.dto.response.UserPublicResponseDto;
 import dev.luizleal.ecommerce.exception.EmailAlreadyUsedException;
 import dev.luizleal.ecommerce.exception.InvalidCredentialsException;
 import dev.luizleal.ecommerce.exception.InvalidPropertyException;
-import dev.luizleal.ecommerce.exception.EntityFoundException;
+import dev.luizleal.ecommerce.exception.EntityNotFoundException;
 import dev.luizleal.ecommerce.persistence.common.UserRole;
 import dev.luizleal.ecommerce.persistence.repository.ProductRepository;
 import dev.luizleal.ecommerce.persistence.repository.UserRepository;
@@ -36,7 +36,7 @@ public class UserService {
     public UserPublicResponseDto getUserById(String userId) {
         var userOptional = userRepository.findById(UUID.fromString(userId));
         if (userOptional.isEmpty()) {
-            throw new EntityFoundException("User not found", "User with id '" + userId + "' was not found");
+            throw new EntityNotFoundException("User not found", "User with id '" + userId + "' was not found");
         }
 
         var user = userOptional.get();
@@ -51,7 +51,7 @@ public class UserService {
 
         var userOptional = userRepository.findById(UUID.fromString(sub));
         if (userOptional.isEmpty() || !userOptional.get().isActive()) {
-            throw new EntityFoundException("Invalid JWT token", "No user found related to this token");
+            throw new EntityNotFoundException("Invalid JWT token", "No user found related to this token");
         }
 
         var user = userOptional.get();
@@ -72,7 +72,7 @@ public class UserService {
 
         var user = userRepository.findById(UUID.fromString(sub));
         if (user.isEmpty() || !user.get().isActive()) {
-            throw new EntityFoundException("Invalid JWT token", "No user found related to this token");
+            throw new EntityNotFoundException("Invalid JWT token", "No user found related to this token");
         }
 
         var existentEmail = userRepository.findByEmail(dto.email());
@@ -122,7 +122,7 @@ public class UserService {
 
         var user = userRepository.findById(UUID.fromString(sub));
         if (user.isEmpty() || !user.get().isActive()) {
-            throw new EntityFoundException("Invalid JWT token", "No user found related to this token");
+            throw new EntityNotFoundException("Invalid JWT token", "No user found related to this token");
         }
 
         var entity = user.get();

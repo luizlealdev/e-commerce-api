@@ -6,7 +6,7 @@ import dev.luizleal.ecommerce.domain.dto.response.AuthResponseDto;
 import dev.luizleal.ecommerce.domain.dto.response.JwtResponseDto;
 import dev.luizleal.ecommerce.exception.EmailAlreadyUsedException;
 import dev.luizleal.ecommerce.exception.InvalidCredentialsException;
-import dev.luizleal.ecommerce.exception.UserNotFoundException;
+import dev.luizleal.ecommerce.exception.EntityNotFoundException;
 import dev.luizleal.ecommerce.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -88,7 +88,7 @@ public class AuthService {
         var user = userRepository.findById(UUID.fromString(userId));
 
         if (user.isEmpty()) {
-            throw new UserNotFoundException("No user found related to this token");
+            throw new EntityNotFoundException("User not found", "No user found related to this token");
         }
 
         var accessToken = jwtService.generateAccessToken(user.get());

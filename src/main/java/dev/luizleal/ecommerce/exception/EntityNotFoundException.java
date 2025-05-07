@@ -3,12 +3,12 @@ package dev.luizleal.ecommerce.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 
-public class EntityFoundException extends ECommerceException{
+public class EntityNotFoundException extends ECommerceException{
 
     private String title;
     private String detail;
 
-    public EntityFoundException(String title, String detail) {
+    public EntityNotFoundException(String title, String detail) {
         this.title = title;
         this.detail = detail;
     }
