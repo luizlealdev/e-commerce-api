@@ -1,11 +1,15 @@
 package dev.luizleal.ecommerce.domain.dto.response;
 
 import dev.luizleal.ecommerce.persistence.entity.User;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.Instant;
 import java.util.UUID;
 
+@Getter
+@Setter
 @NoArgsConstructor
 public class UserPrivateResponseDto {
 
