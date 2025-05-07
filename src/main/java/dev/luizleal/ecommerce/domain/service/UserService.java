@@ -40,13 +40,7 @@ public class UserService {
 
         var user = userOptional.get();
 
-        return new UserPublicResponseDto(
-                user.getId().toString(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getRole().name(),
-                user.getCreatedAt()
-        );
+        return new UserPublicResponseDto(user);
 
     }
 
@@ -61,28 +55,14 @@ public class UserService {
 
         var user = userOptional.get();
 
-        return new UserPrivateResponseDto(
-                user.getId().toString(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getAddress(),
-                user.getRole().name(),
-                user.getCreatedAt()
-        );
+        return new UserPrivateResponseDto(user);
     }
 
     public List<UserPublicResponseDto> getAllUsers(int offset, int limit) {
         var pageRequest = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "createdAt"));
         var users = userRepository.findAllByOrderByCreatedAtDesc(pageRequest);
 
-        return users.map(usr -> new UserPublicResponseDto(
-                usr.getId().toString(),
-                usr.getFirstName(),
-                usr.getLastName(),
-                usr.getRole().name(),
-                usr.getCreatedAt()
-        )).getContent();
+        return users.map(UserPublicResponseDto::new).getContent();
     }
 
     public UserPrivateResponseDto updateUser(String authorization, UpdateUserRequestDto dto) {
@@ -112,15 +92,7 @@ public class UserService {
 
         userRepository.save(entity);
 
-        return new UserPrivateResponseDto(
-                entity.getId().toString(),
-                entity.getFirstName(),
-                entity.getLastName(),
-                entity.getEmail(),
-                entity.getAddress(),
-                entity.getRole().name(),
-                entity.getCreatedAt()
-        );
+        return new UserPrivateResponseDto(entity);
     }
 
     @Transactional

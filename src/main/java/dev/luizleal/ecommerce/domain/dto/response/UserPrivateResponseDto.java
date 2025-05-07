@@ -1,12 +1,29 @@
 package dev.luizleal.ecommerce.domain.dto.response;
 
-import java.time.Instant;
+import dev.luizleal.ecommerce.persistence.entity.User;
+import lombok.NoArgsConstructor;
 
-public record UserPrivateResponseDto(String id,
-                                     String firstName,
-                                     String lastName,
-                                     String email,
-                                     String address,
-                                     String role,
-                                     Instant createdAt) {
+import java.time.Instant;
+import java.util.UUID;
+
+@NoArgsConstructor
+public class UserPrivateResponseDto {
+
+    private UUID id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String address;
+    private String role;
+    private Instant createdAt;
+
+    public UserPrivateResponseDto(User user) {
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.address = user.getAddress();
+        this.role = user.getRole().name();
+        this.createdAt = user.getCreatedAt();
+    }
 }
