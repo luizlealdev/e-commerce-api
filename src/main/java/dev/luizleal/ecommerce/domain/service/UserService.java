@@ -55,7 +55,7 @@ public class UserService {
         var sub = jwtService.getSubject(token);
 
         var userOptional = userRepository.findById(UUID.fromString(sub));
-        if (userOptional.isEmpty() || !UserStatus.isActive(userOptional.get().getStatus())) {
+            if (userOptional.isEmpty() || !userOptional.get().isActive()) {
             throw new UserNotFoundException("No user found related to this token");
         }
 
@@ -90,7 +90,7 @@ public class UserService {
         var sub = jwtService.getSubject(token);
 
         var user = userRepository.findById(UUID.fromString(sub));
-        if (user.isEmpty() || !UserStatus.isActive(user.get().getStatus())) {
+        if (user.isEmpty() || !user.get().isActive()) {
             throw new UserNotFoundException("No user found related to this token");
         }
 
@@ -129,7 +129,7 @@ public class UserService {
         var sub = jwtService.getSubject(token);
 
         var user = userRepository.findById(UUID.fromString(sub));
-        if (user.isEmpty() || !UserStatus.isActive(user.get().getStatus())) {
+        if (user.isEmpty() || !user.get().isActive()) {
             throw new UserNotFoundException("No user found related to this token");
         }
 
@@ -148,7 +148,7 @@ public class UserService {
         var sub = jwtService.getSubject(token);
 
         var user = userRepository.findById(UUID.fromString(sub));
-        if (user.isEmpty() || !UserStatus.isActive(user.get().getStatus())) {
+        if (user.isEmpty() || !user.get().isActive()) {
             throw new UserNotFoundException("No user found related to this token");
         }
 

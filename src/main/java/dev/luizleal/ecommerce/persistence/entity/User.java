@@ -63,6 +63,6 @@ public class User {
     }
 
     public boolean isActive() {
-        return this.role.name().equals(UserStatus.ACTIVE);
+        return UserStatus.ACTIVE.equals(this.status);
     }
 }
